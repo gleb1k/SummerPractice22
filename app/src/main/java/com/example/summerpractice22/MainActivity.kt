@@ -30,12 +30,6 @@ class MainActivity : AppCompatActivity() {
         val editTextNumberWeight: EditText = findViewById(R.id.editTextNumberWeight)
         val editTextNumberAge: EditText = findViewById(R.id.editTextNumberAge)
 
-        //fun invalidValues() {
-        //  textView.setText("Недопустимые значения, проверьте поля!")
-        // }
-
-        // пытался что-то закостылить с валидацией. попытка провалилась.
-        // теперь просто крашит при неправильных значениях (не баг, а фича)
 
         button?.setOnClickListener {
             val name: String = editTextName?.getText().toString()
@@ -43,17 +37,18 @@ class MainActivity : AppCompatActivity() {
             val weight: Int = Integer.parseInt(editTextNumberWeight?.getText().toString())
             val age: Int = Integer.parseInt(editTextNumberAge?.getText().toString())
 
-            if (name.length > 50) throw Exception("Превышена длина имени")
-            if (height <= 0 || height >= 250) throw Exception("Превышен рост")
-            if (weight <= 0 || weight >= 250) throw Exception("Превышен вес")
-            if (age <= 0 || age >= 150) throw Exception("Превышен возраст")
+            //Как сделать красивее не придумал
+            if ((name.length > 50) || (height <= 0 || height >= 250)
+                || (weight <= 0 || weight >= 250) || (age <= 0 || age >= 150)
+            ) {
+                textView.setText("Invalid values :с")
+            } else {
+                val result: Long = Math.round(88.36 + (13.4 * weight) + (4.8 * height) - (5.7 * age))
+                textView.setText("$name Your callories is:  $result")
+            }
 
             //BMR = 88,36 + (13,4 × вес в кг) + (4,8 × рост в см) – (5,7 × возраст в годах).
 
-            val result : Long = Math.round(88.36 + (13.4 * weight) + (4.8 * height) - (5.7 * age))
-            textView.setText("$name Your callories is:  $result")
-            println(name)
-            print(height)
         }
 
     }
